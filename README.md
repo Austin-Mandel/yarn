@@ -17,5 +17,5 @@ Current milestones are:
 - Lightweight interpreter (weave)
   - components TBD
 
-* indicates current milestone.
+\* indicates current milestone.
 
