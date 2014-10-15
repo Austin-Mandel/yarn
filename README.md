@@ -1,7 +1,7 @@
 yarn
 ====
 
-Yarn is a highly threaded programming language designed with the goal of enabling development of complex applications in less than 2 hours.
+Yarn is a highly threaded programming language designed with the goal of enabling development of complex applications in a relatively short period of time.
 Yarn is a semi-compiled language (similar to java or compiled python) which has a compiler, written in C, called loom, and an interpreter, written in C++, called weave.
 
 
