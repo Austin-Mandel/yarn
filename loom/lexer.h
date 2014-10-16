@@ -9,43 +9,41 @@ typedef enum {
 	EQUALITY, INEQUALITY, AND, OR, XOR, NOT,
 	BITAND, BITOR, BITXOR, BITNOT, BITLSH, BITRSH,
 	ADD, SUB, MUL, DIV, MOD, EXP, INCREMENT, DECREMENT,
-	NONE, LBRACKET, RBRACKET
+	NOOP, LBRACKET, RBRACKET
 } Operator;
 
 typedef enum {
-	NONE, CALL, THREAD_CALL, VALUE
+	NOPRE, CALL, THREAD_CALL, VALUE
 } PrefixOperator;
 
 typedef enum {
-	NONE, ARRAY, HASH, ELEMENT
+	NOPOST, ARRAY, HASH, ELEMENT
 } PostfixOperator;
 
-typedef struct {
-	PrefixOperator 	preOp  =	NONE;
-	char*		lhs_label;
-	PostfixOperator postOp = 	NONE;
-	Operator 	op     =	NONE;
-	Evaluator* 	rhs;
+typedef struct EvaluatorT {
+	PrefixOperator 	   preOp;
+	char*		   lhs_label;
+	PostfixOperator    postOp;
+	Operator 	   op;
+	struct EvaluatorT* rhs;
 } Evaluator;
+const Evaluator EVALUATOR_INIT = {NOPRE, NULL, NOPOST, NOOP, NULL};
 
 typedef struct {
-	PrefixOperator     preOp  = 	NONE;
+	PrefixOperator     preOp;
 	char* 	           lhs_label;
-	PostfixOperator    postOp =	NONE;
-	AssignmentOperator op     = 	VOID;
+	PostfixOperator    postOp;
+	AssignmentOperator op;
 	Evaluator*         rhs;
 } Statement;
+const Statement STATEMENT_INIT = {NOPRE, NULL, NOPOST, VOID, NULL};
 
 // These structures are for storing the lexed statement list
-typedef struct {
+// This is essentially a doubly linked list
+typedef struct NodeT {
 	Statement* 	statement;
-	Node*		next;
-	Node* 		prev;
+	struct NodeT*	next;
+	struct NodeT* 	prev;
 } Node;
-
-typedef struct {
-	Node* first;
-	Node* last;
-} CodeBlock;
 
 #endif
