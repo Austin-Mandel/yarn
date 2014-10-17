@@ -1,7 +1,11 @@
+#include <stdio.h>
+#include "utils.h"
+
 /* Helper Functions */
 void printStatement(Statement* statement) {
-	printf("\tLABEL: %s\n", temp->lhs_label);
-	printAssignmentOperator(temp->op);	
+	printf("\tLABEL: %s\n", statement->lhs_label);
+	AssignmentOperator op = statement->op;
+	printAssignmentOperator(op);	
 }
 
 void printAssignmentOperator(AssignmentOperator op) {

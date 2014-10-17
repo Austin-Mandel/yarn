@@ -1,6 +1,5 @@
 %option stack
 %x comment statement_begin statement evaluator
-		/*     DECLARATIONS     */
 %top {
 	#include <assert.h>
 	#include <stdlib.h>
@@ -17,9 +16,7 @@
 	void nextStatement();
 }
 
-		/* END OF DECLARATIONS */
 
-		/*     DEFINITIONS     */
 
 /* Scalar Value patterns 							*/
 INTEGER		[0-9]+
@@ -37,17 +34,15 @@ POSTFIX_END	"]"|">"
 BLOCK_BEGIN	"{"
 BLOCK_END	"}"
 	
-		/* END OF DEFINITIONS */
 
 %%
 		/*     RULES     */
 
-		printf("what what in thhe but");
 \s		/* Eat up whitespace */
 
 		/* COMMENT PARSING */
 \#.*		BEGIN(comment);
-<comment> {
+<comment>{
 	[^\n]*	/* Eat up all non-newline text */
 	[\n]	BEGIN(INITIAL);
 }
@@ -69,12 +64,11 @@ BLOCK_END	"}"
 <statement_begin>{ASSIGNMENT} 	getOp(yytext, temp); //BEGIN(statement);
 <statement_begin>";"		{
 					printf("Statement completed:\n");
-					printStatement(Statement);
+					printStatement(temp);
 					nextStatement();
 					BEGIN(INITIAL);
 				}
 
-		/* END OF RULES */
 %%
 
 		/*     USER CODE     */

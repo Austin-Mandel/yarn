@@ -1,5 +1,5 @@
 #ifndef __SHED_LEXER_H
-#define __SHED_LEXER_H
+#define __SHED_LEXER_H 
 
 typedef enum {
 	ASSIGN, APPEND, REMOVE, SLICE, MULTIPLY, VOID
@@ -27,7 +27,7 @@ typedef struct EvaluatorT {
 	Operator 	   op;
 	struct EvaluatorT* rhs;
 } Evaluator;
-const Evaluator EVALUATOR_INIT = {NOPRE, NULL, NOPOST, NOOP, NULL};
+extern const Evaluator EVALUATOR_INIT;
 
 typedef struct {
 	PrefixOperator     preOp;
@@ -36,7 +36,7 @@ typedef struct {
 	AssignmentOperator op;
 	Evaluator*         rhs;
 } Statement;
-const Statement STATEMENT_INIT = {NOPRE, NULL, NOPOST, VOID, NULL};
+extern const Statement STATEMENT_INIT;
 
 // These structures are for storing the lexed statement list
 // This is essentially a doubly linked list
