@@ -22,7 +22,7 @@ typedef enum {
 
 typedef enum {
 	INT_T, LONG_T, DOUBLE_T, STRING_T, ARRAY_T, HASH_T, CALL_T, CODE_T, 
-	THREAD_T
+	THREAD_T, GENERIC_T
 } LabelType;
 
 /* Labels can hold any kind of value - because they all overlap!
@@ -30,6 +30,12 @@ typedef enum {
  *		  Note, any Ignored fields are NULL pointers.
  *
  * name		- The label's textual name
+ *
+ * As a generic label:
+ * type		- Always GENERIC.
+ *		- This can point to anything, like C's void*.
+ * scalar	- Ignored.
+ * data		- Ignored.
  *
  * As a SCALAR:
  * type   	- The type of the scalar, int, long, double or string
@@ -66,7 +72,8 @@ typedef enum {
  *
  * As a CODE BLOCK:
  * type		- Always CODE.
- * scalar	- An unsigned integer, representing the size of the data array.
+ * scalar	- A string, the name of the code block.
+ *		  NOTE: Could be anonymous, in which case this will be NULL.
  * data		- Array of Statement structs, and hashmap of params.
  *		  NOTE ON ARRAY ORGANIZATION:
  *			Index - Description
@@ -75,7 +82,7 @@ typedef enum {
  *		      data[0] - The hash, in the format described earlier.
  *				NOTE: If the hash size is 0, this is the start
  *			        of the code array!
- *		    data[2] + - The code array. size is (scalar - data[0] - 1).
+ *		    data[1] + - The code array. size is (scalar - data[0] - 1).
  *
  * As a CALL:
  * type		- Always CALL.
@@ -114,6 +121,7 @@ typedef struct {
 	LabelType* type;
 	void*	   data;
 } Label;
+extern const Label LABEL_INIT;
 
 typedef struct EvaluatorT {
 	PrefixOperator 	   preOp;

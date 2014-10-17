@@ -50,19 +50,21 @@ BLOCK_END	"}"
 
 		/* Statments starting with a string literal */
 "\"\""		{
-			
+			// Create new label
+			Label label = LABEL_INIT;
+			label.type  = STRING_T;
+			label.scalar = strdup(yytext);
 		}
 
 \".+\"		{
 			printf("Got string: %s\n", yytext);
 		}
 
-{LABEL}		{
-			char* label = malloc(sizeof(char) * yyleng);
-			assert(label != NULL);
-			strcpy(label, yytext);
-			temp->lhs_label = label;
-			printf("Label discovered: %s\n", temp->lhs_label);
+{LABEL}		{	// Create new label
+			Label label = LABEL_INIT;
+			label.name = strdup(yytext);
+			printf("Label discovered: %s\n", label.name);
+			temp->lhs_label = &label;
 			BEGIN(statement_begin);
 		}
 <statement_begin>{ASSIGNMENT} 	getOp(yytext, temp); //BEGIN(statement);
