@@ -1,10 +1,19 @@
-ALL: shed_lex shed
+ALL: shed
+SRC="src"
+SHED_SRC="$(SRC)/shed"
+INC="lib"
 
-shed_lex: shed.lex
-	flex shed.lex
+# Shed - the lexer component
+shed: shed_lex shed_c
 
-shed: lex.yy.c utils.c
-	gcc lex.yy.c utils.c -o shed
+shed_lex:
+	flex $(SHED_SRC)/shed.lex
 
-clean:
-	rm shed lex.yy.c
+shed_c: lex.yy.c
+	gcc -I$(INC) lex.yy.c $(SHED_SRC)/utils.c -o shed
+
+clean_shed:
+	rm lex.yy.c shed
+
+# Cleans up all the components
+clean: clean_shed
