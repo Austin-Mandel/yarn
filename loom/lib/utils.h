@@ -4,5 +4,6 @@
 
 void printStatement(Statement* statement);
 void printAssignmentOperator(AssignmentOperator op);
+void printLabel(Label* label);
 
 #endif

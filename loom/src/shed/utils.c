@@ -3,9 +3,22 @@
 
 /* Helper Functions */
 void printStatement(Statement* statement) {
-	printf("\tLABEL: %s\n", statement->lhs_label);
-	AssignmentOperator op = statement->op;
-	printAssignmentOperator(op);	
+	printLabel(statement->lhs_label);
+	printAssignmentOperator(statement->op);	
+}
+
+void printStatement(Label* label) {
+	// If label name is NULL, it's a literal
+	if (label->name == 0) {
+		printf("LITERAL:\n");
+	} else {
+		printf("LABEL: %s\n", label->name);
+	}
+	
+	// Check what kind of type it is
+	switch(label->scalarType) {
+		
+	}
 }
 
 void printAssignmentOperator(AssignmentOperator op) {

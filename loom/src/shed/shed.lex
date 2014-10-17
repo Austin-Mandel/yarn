@@ -16,8 +16,6 @@
 	void nextStatement();
 }
 
-
-
 /* Scalar Value patterns 							*/
 INTEGER		[0-9]+
 SIGNED_INTEGER	[\+\-]{INTEGER}
@@ -33,9 +31,9 @@ POSTFIX_BEGIN	"["|"<"
 POSTFIX_END	"]"|">"
 BLOCK_BEGIN	"{"
 BLOCK_END	"}"
-	
 
 %%
+
 		/*     RULES     */
 
 \s		/* Eat up whitespace */
@@ -47,12 +45,18 @@ BLOCK_END	"}"
 	[\n]	BEGIN(INITIAL);
 }
 
-"\"\""		printf ("Got empty string.");
+
+		/* STATEMENT PARSING */
+
+		/* Statments starting with a string literal */
+"\"\""		{
+			
+		}
+
 \".+\"		{
 			printf("Got string: %s\n", yytext);
 		}
 
-		/* STATEMENT PARSING */
 {LABEL}		{
 			char* label = malloc(sizeof(char) * yyleng);
 			assert(label != NULL);
@@ -70,6 +74,8 @@ BLOCK_END	"}"
 				}
 
 %%
+
+
 
 		/*     USER CODE     */
 
