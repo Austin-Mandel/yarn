@@ -118,7 +118,7 @@ typedef enum {
 typedef struct {
 	char*	   name;
 	void* 	   scalar;
-	LabelType* type;
+	LabelType  type;
 	void*	   data;
 } Label;
 extern const Label LABEL_INIT;

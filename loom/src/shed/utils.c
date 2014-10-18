@@ -36,15 +36,15 @@ void printLabel(Label* label) {
 	switch(label->type) {
 	case INT_T:
 		// Integer (signed)
-		printf("VALUE: %d\n", (int) &label->scalar);
+		printf("VALUE: %d\n", (int) *label->scalar);
 		break; 
 	case LONG_T:
 		// Long Integer (unsigned)
-		printf("VALUE: %lu\n", (int) &label->scalar);
+		printf("VALUE: %lu\n", (int) *label->scalar);
 		break;
 	case DOUBLE_T:
 		// Double floating point value
-		printf("VALUE: %e\n", (double) &label->scalar);
+		printf("VALUE: %e\n", (double) *label->scalar);
 		break;
 	case STRING_T:
 		// A string
@@ -52,13 +52,13 @@ void printLabel(Label* label) {
 		break;
 	case ARRAY_T:
 		// An array, so this is the length.
-		printf("ARRAY.\nLENGTH: %u", (unsigned int) &label->scalar);
+		printf("ARRAY.\nLENGTH: %u", (unsigned int) *label->scalar);
 		// Print the array data
 		printArray(label->data);
 		break;
 	case HASH_T:
 		// A hash, so this is it's size.
-		printf("HASH.\n# OF ENTRIES: %u", (unsigned int) &label->scalar);
+		printf("HASH.\n# OF ENTRIES: %u", (unsigned int) *label->scalar);
 		// Print the hash out
 		printHash(label->data);
 		break;
@@ -69,7 +69,7 @@ void printLabel(Label* label) {
 		} else {
 			printf("CALL ON THREAD:");
 			Label* thread_lbl = (Label*) label->scalar;
-			printf("%s\n", (char*) thread->lbl->scalar);
+			printf("%s\n", (char*) thread_lbl->scalar);
 		}
 		// Print the call data
 		printCall(label->data);
